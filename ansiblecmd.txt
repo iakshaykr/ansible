@@ -1,0 +1,36 @@
+sudo apt update
+
+sudo apt install software-properties-common
+
+sudo apt-add-repository --yes --update ppa:ansible/ansible
+
+sudo apt install ansible
+
+
+then go to cd /etc/ansible/
+
+>>vi hosts
+
+paste below cmd:
+
+[myhost]
+192.X.X.X
+#ipaddress of your machine
+
+
+ansible all -m ping --ask-pass
+
+
+nano apache.yml
+
+ansible-playbook apache.yml
+
+ansible -m shell -a "service apache2 status" myhost
+
+
+
+Link : https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
+
+
+
+https://www.scaleway.com/en/docs/how-to-install-apache-on-ansible/

@@ -1,0 +1,6 @@
+- hosts: myhost
+  sudo: yes
+  tasks:
+    - name: get install ansible
+      script: ansi.py
+

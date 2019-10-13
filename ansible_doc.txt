@@ -1,0 +1,101 @@
+Ansible is a deployment automation tools which uses push approach.
+Ansible is
+- Simple
+- Agentless
+- Powerful
+- Accessible
+============================================================================
+Ansible is much easier to work with compred to Puppet, chef, etc
+Ansible in the industry
+=============================================================================
+Ansible Arch
+===========================================================================
+                Inventory
+                   |
+                   |                                                     Client             
+                   |                                            SSH        []
+                Playbook ---------> Ansible Config ---> Python ----------  [] 
+                   |                                                       []   
+                   |
+                   |
+                   |
+                 Module
+=====================================================================================
+Terminology
+Modules -> are commands  (installed automatically)                
+Inventory -> A groups of the server need to configured 
+Playbooks -> Are yaml files - The configuration want to apply on remote servers
+Ansible config -> Where are Ansible Global settings are placed.
+=====================================================================================
+playbook 
+ any number of plays
+    any number tasks (modules) 432
+    
+All client and ansible machine Python should be installed
+Between Ansible and remote server, connection will be established using SSH
+================================================================================
+Ansible Ad-Hoc commands 
+As-Hoc commands used to accomplish tasks quickly
+There commands are mostly used one-off tasks
+Ad-hoc commands are handy to get small tasks done quickly 
+==============================================================================
+Installations
+ yum install epel-release
+ yum install ansible
+ ===========================================================================
+ Setup
+ 
+ /etc/ansible/hosts  -> inventory
+ 
+[webservers]
+10.0.0.4
+[webservers:vars]
+ansible_ssh_user=vagrant
+ansible_ssh_private_key_file=/home/vagrant/.ssh/id_rsa
+host_key_checking = False
+user1 - ssh-keygen
+        ssh-copy-id -i user1@desIP
+======================================================================
+ansible  webservers -s   -m  yum  -a  "name=ntp  state=absent"        
+ansible - m ping destIP
+ansible servers -m ping
+ansible servers -m command -a 'uptime'
+ansible servers -m command -a 'dh -h'
+ansible -m user -a "name=john password=john" servers
+ansible -m user -a "name=john password=john" servers -s
+ansible-doc yum
+ansible -m ping servers --limit 10.0.0.4
+ansible-doc -l
+docs.ansible.com
+ansible servers  -m yum -a  "name=httpd state=present" --limit 10.0.0.3
+ansible servers  -m service  -a  "name=httpd state=started" --limit 10.0.0.3 -s
+ansible servers  -m service  -a  "name=httpd state=stopped" --limit 10.0.0.3 -s
+ansible server -m copy -a "scr=/tmp/file1 dest=/tmp/file"
+ansible servers -m yum -a "name=python2 state=present" -s
+ansible servers -m apt  -a "name=git state=present" -s
+ansible servers -m  git -a "repo=https://github.com/devops-trainer/repo1.git dest=/tmp/new/" -s
+ansible servers -m setup -a "filter=ansible_user*"
+===============================================================================================
+playbook
+[root@puppetserver ~]# cat install.yaml
+---
+- hosts: servers
+  become: true
+  become_user: root
+  tasks:
+  - name: Install nginx package
+    yum: name=nginx state=installed
+  - name: start service
+    service: name=nginx state=started
+    
+ansible-playbook install.yaml --syntax-check
+ansible-playbook install.yaml --list-hosts
+root@puppetserver ~]# cat playbook2.yaml
+---
+- hosts: servers
+  become: true
+  tasks:
+  - name: trafer the script
+    copy: src=test.sh dest=/tmp/
+  - name: execute the script
+    command: sh /tmp/test.sh

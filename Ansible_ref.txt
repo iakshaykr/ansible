@@ -1,0 +1,32 @@
+#install.yml
+---
+- hosts: all
+  become: true
+  become_user: root
+
+  tasks:
+  - name: install nginx package
+    yum: name={{ tomcat_service_name }} state=installed
+
+  - name: start the service
+    service: name=nginx state=started
+
+====================================
+[root@manager Data]# cat host/development1
+[DEVELOPMENT1]
+10.0.0.4
+10.0.0.9
+10.0.0.10
+
+UI ansible_host=10.0.0.4 tomcat_service_name=tomcat6
+DB ansible_host=10.0.0.10
+
+[all:vars]
+ansible_ssh_user=vagrant
+ansible_ssh_private_key_file=/home/vagrant/.ssh/id_rsa
+
+=====================================================
+
+[root@manager Data]# cat group_vars/DEVELOPMENT1
+tomcat_service_name: tomcat4
+

@@ -1,5 +1,5 @@
 [host]
-192.168.102.137
+192.168.102.138 ansible_user=ubuntu2
 #ansible_ssh_private_key_file=/home/vagrant/.ssh/id_rsa
 # This is the default ansible 'hosts' file.
 #

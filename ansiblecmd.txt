@@ -34,3 +34,7 @@ Link : https://docs.ansible.com/ansible/latest/installation_guide/intro_installa
 
 
 https://www.scaleway.com/en/docs/how-to-install-apache-on-ansible/
+
+
+
+sudo apt-get install openssh-server

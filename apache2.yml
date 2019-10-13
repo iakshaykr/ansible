@@ -1,4 +1,4 @@
-- hosts: apache #you have to use the localhost/myhost insted of apache
+- hosts: host
   sudo: yes
   tasks:
     - name: install apache2

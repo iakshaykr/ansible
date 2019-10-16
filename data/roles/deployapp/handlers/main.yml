@@ -1,0 +1,4 @@
+---
+# handlers file for deployapp
+-name: restart tomcat8
+ service: name=tocat8 state=restart
